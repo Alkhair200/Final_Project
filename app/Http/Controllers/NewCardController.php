@@ -21,10 +21,33 @@ class NewCardController extends Controller
             'type_scur' => 'required',
             'dir_work' => 'required',
             'phone' => 'required',
+            'imag' => 'required|mims:jpg,png',
             
         ]);
 
-        $num_card = 151647;
+        $numCard = '';
+
+        $num_card = 2151647;
+
+        $num_card = Scurity_card::all()->last();
+
+        if (empty($num_card )) {
+
+            $numCard = 2151647;
+
+        } else {
+
+            $numCard = $num_card->num_card +2;
+        }
+    
+
+        $randomNumber = rand(15,35);
+
+        $randomize = rand(111111, 999999);
+        $extension = $request->file('imag')->getClientOriginalExtension();
+        $filename = $randomize . '.' . $extension;
+        $image = $request->file('imag')->move('images/user/', $filename);
+
         Scurity_card::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -32,10 +55,13 @@ class NewCardController extends Controller
             'type_scur' => $request->type_scur,
             'dir_work' => $request->dir_work,
             'phone' => $request->phone,
-            'num-card' => $num_card +2,
+            'imag' => $image,
+            'num_card' => $numCard,
+            'random_umber' => $randomNumber,
         ]);
 
-        session()->flash('message', ' تم ارسال طلبك بنجاح سوف تتم معالجه طلبك خلال 24 ساعه.');
+        
+        session()->flash('message', ' تم ارسال طلبك بنجاح سوف تتم معالجه طلبك خلال 24 ساعه رقم إستخراج البطاقه هو .' .$randomNumber);
         return redirect()->back();
     }
 
@@ -85,12 +111,45 @@ class NewCardController extends Controller
     function loseCard(Request $request){
         
         $request->validate([
-            'name' => 'required|min:3',
-            'num-card' => 'required',
+            'num_card' => 'required',
         ]);
 
-        session()->flash('message', 'تم ارسال طلبك بنجاح سوف تتم معالجه طلبك خلال 24 ساعه.');
-        return redirect()->back();
+        $print = Scurity_card::where('status',1)->where('num_card',$request->num_card)->first();
+
+        //  return $print = $status->($request->num_card)->get();
+
+        if (empty($print)) {
+
+            session()->flash('message', ' غير موجود.');
+            return redirect()->back();
+
+        }else{
+
+            return view('print-card',compact('print'));
+        }
+        
+
+    }
+
+    public function printView()
+    {
+        return view('print-card');
+    }
+
+    public function print(Request $request)
+    {
+        $status = Scurity_card::where('status',1)->get();
+
+
+        $print = Scurity_card::where('status',1)->where('random_umber',$request->random_umber)->first();
+
+        if (!empty($print)) {
+            return view('print-card',compact('print'));
+        } else {
+            session()->flash('message', 'هذه البيانات غير موجوده.');
+            return redirect()->back();
+        }
+        
     }
 
 }

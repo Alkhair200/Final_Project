@@ -42,7 +42,7 @@ background: #a4c0df;
     <div class="row">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{{ url('/') }}">Navbar w/ text</a>
+          <a class="navbar-brand" href="{{ url('/') }}">الشركة التعاونيه للتأمين</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -66,35 +66,31 @@ background: #a4c0df;
         </div>
       </nav>
 
+      @if (session()->has('message'))
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        {{ session('message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      @endif
+
       <div class="row">
         
           <div class="row">
             <div class="clients-form">
-            <form action="{{ route('store-card') }}" method="POST">
+            <form action="{{ route('lose-card') }}" method="POST">
               @csrf
               {{ method_field('post') }}
               <div class="row">
                   <div class="col-md-12">
                       <div class="form-group">
                           <label>رقم البطاقه</label>
-                          <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-                          @error('name')
+                          <input type="text" name="num_card" class="form-control" value="{{ old('num_card') }}">
+                          @error('num_card')
                             <div class="alert-danger bg-maroon" style="font-size: 13px;
                             font-weight: normal; color:#f03">{{ $message }}</div>
                           @enderror
                       </div>
                   </div>
-
-                  <div class="col-md-12">
-                    <div class="form-group">
-                        <label>رقم بلاغ الفقدان</label>
-                        <input type="text" name="address" class="form-control" value="{{ old('address') }}">
-                        @error('address')
-                        <div class="alert-danger bg-maroon" style="font-size: 13px;
-                        font-weight: normal; color:#f03">{{ $message }}</div>
-                      @enderror
-                    </div>
-                </div>
               </div>
 
               <div class="row">

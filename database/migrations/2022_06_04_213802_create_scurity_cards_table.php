@@ -17,7 +17,10 @@ return new class extends Migration
             $table->string('type_scur');
             $table->string('phone');
             $table->string('dir_work');
+            $table->string('imag');
             $table->bigInteger('num-card');
+            $table->bigInteger('random_umber');
+            
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('expire')->default(0);
 

@@ -42,7 +42,7 @@ background: #a4c0df;
     <div class="row">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{{ url('/') }}">Navbar w/ text</a>
+          <a class="navbar-brand" href="{{ url('/') }}">الشركة التعاونيه للتأمين</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -77,7 +77,7 @@ background: #a4c0df;
         
           <div class="row">
             <div class="clients-form">
-            <form action="{{ route('store-card') }}" method="POST">
+            <form action="{{ route('store-card') }}" method="POST" enctype="multipart/form-data">
               @csrf
               {{ method_field('post') }}
               <div class="row">
@@ -114,17 +114,14 @@ background: #a4c0df;
                   </div>
               </div>
 
-
-              <div class="col-md-12">
-                <div class="form-group">
-                    <label>نوع التأمين</label>
-                    <input type="text" name="type_scur" class="form-control" value="{{ old('type_scur') }}">
-                    @error('type_scur')
-                    <div class="alert-danger bg-maroon" style="font-size: 13px;
-                    font-weight: normal; color:#f03">{{ $message }}</div>
-                  @enderror
-                </div>
-            </div>
+            <div class="col-md-12">
+              <label>نوع التأمين</label>
+                <select class="form-select"  name="type_scur">
+                  <option selected disabled>نوع التأمين</option>
+                  <option value="تأمين صحي">تأمين طبي</option>
+                  <option value="تأمين سيارات">تأمين سيارات</option>
+                </select>
+          </div>
 
 
             <div class="col-md-12">
@@ -148,6 +145,16 @@ background: #a4c0df;
               @enderror
             </div>
         </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+          <label for="formFileDisabled" class="form-label">الصوره الشخصيه</label>
+          <input class="form-control" type="file" id="formFile" name="imag">
+        </div>
+        </div>
+
+        
+
               </div>
 
               <div class="row">

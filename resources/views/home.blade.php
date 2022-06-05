@@ -36,11 +36,12 @@
                                     <td>{{ $item->address }}</td>
                                     <td>{{ $item->berth_date }}</td>
                                     <td>{{ $item->phone }}</td>
+                                    <td><img src="{{ asset($item->imag)}}" style="width: 31%;"></td>
                                     <td>
                                         @if ($item->status == 0)
                                             <span style="color: #f03">غير مفعل</span>
                                         @else
-                                            <span style="color: rgb(32, 243, 43)"></span>
+                                            <span style="color: rgb(32, 243, 43)">مفعل</span>
                                         @endif
                                     </td>
                                     <td>

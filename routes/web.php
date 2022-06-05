@@ -20,9 +20,9 @@ Route::get('/', function () {
 
 
 
-// Auth::routes();
+ Auth::routes();
 
-Auth::routes(['register' => false]);
+// Auth::routes(['register' => false]);
 
 Route::group(['middleware' =>'auth'], function(){
 
@@ -45,3 +45,6 @@ Route::post('/expire-card', [App\Http\Controllers\NewCardController::class, 'exp
 
 Route::get('/lose-card-view', [App\Http\Controllers\NewCardController::class, 'loseCardView'])->name('lose-card-view');
 Route::post('/lose-card', [App\Http\Controllers\NewCardController::class, 'loseCard'])->name('lose-card');
+
+Route::get('/card-print-view', [App\Http\Controllers\NewCardController::class, 'printView'])->name('card-print-view');
+Route::post('/card-print', [App\Http\Controllers\NewCardController::class, 'print'])->name('card-print');
